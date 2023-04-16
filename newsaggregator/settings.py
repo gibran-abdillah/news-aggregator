@@ -77,9 +77,9 @@ WSGI_APPLICATION = 'newsaggregator.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-
+DATABASE_URL = os.environ.get('DATABASE_URL') or f'sqlite:///{BASE_DIR}/db.sqlite3'
 DATABASES = {
-    'default': dj_database_url.config(env='DATABASE_URL')
+    'default': dj_database_url.config(default=DATABASE_URL)
 }
 
 
