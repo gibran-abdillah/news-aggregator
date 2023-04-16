@@ -16,7 +16,7 @@ DAY_REPLACEMENT = {
 
 class Spider:
 
-    def __init__(self, base_url: str=''):
+    def __init__(self, base_url):
         
         self.base_url = base_url
 
@@ -27,7 +27,7 @@ class Spider:
 
         self.news_card = "article"
 
-        self.max_news = 15
+        self.max_news = 20
 
         # format date that usually used in news article, thx to CHATGPT!
         self.date_formats = [
@@ -66,7 +66,11 @@ class Spider:
         """
         get source name from base_url
         """
-        return ''.join([x for x in urlparse(self.base_url).netloc.split('.') if len(x) > 4])
+        if isinstance(self.base_url, list):
+            url = self.base_url[0]
+        else:
+            url = self.base_url
+        return ''.join([x for x in urlparse(url).netloc.split('.') if len(x) > 4])
 
     def buildSession(self):
         session = requests.Session()
@@ -74,26 +78,46 @@ class Spider:
         return session
     
     def getSoup(self, url: str, **kwargs):
-        session = self.buildSession()
-        response = session.get(url, **kwargs)
-        return BeautifulSoup(response.text, 'html.parser')
-    
+        try:
+            session = self.buildSession()
+            response = session.get(url, **kwargs)
+            return BeautifulSoup(response.text, 'html.parser')
+        except requests.exceptions.RequestException:
+            return None
+        
     def initRequest(self):
         """
         init request and get news from news card
         """
-        soup = self.getSoup(self.base_url)
-        news_card = soup.find_all('article')
-        cleaned = self.parseInit(news_card)
-        return cleaned 
+        result = []
+        if isinstance(self.base_url, list):
+            for base_url in self.base_url:
+                soup = self.getSoup(base_url)
+                if not soup:
+                    return None
+                news_card = soup.find_all('article')
+                cleaned = self.parseInit(news_card)
+                result = result + cleaned
+            return result 
+        else:
+            soup = self.getSoup(self.base_url)
+            if not soup:
+                return None
+            news_card = soup.find_all('article')
+            cleaned = self.parseInit(news_card)
+            return cleaned
+         
 
     def main(self):
         articles = self.initRequest()
+        print(f'added url from ({self.source}): {len(articles)}')
         result = []
         if articles:
 
             for article in articles:
                 soup = self.getSoup(article)
+                if not soup:
+                    return False
 
                 title = self.parseTitle(soup)
                 content = self.parseContent(soup)
