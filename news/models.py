@@ -17,6 +17,16 @@ class News(models.Model):
 
     source = models.ForeignKey(Source, on_delete=models.CASCADE, null=True)
 
+    
+    def save(self, **kwargs) -> None:
+    
+        if not self.source:
+            source = Source.objects.get_or_create(name='unkown')
+            s, created = source 
+            self.source = s
+        
+        return super().save(**kwargs)
+    
     def __str__(self):
         return self.title 
     
