@@ -130,7 +130,7 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CSRF_TRUSTED_ORIGINS = ['*']
+CSRF_TRUSTED_ORIGINS = ['https://news-aggregator-production-8c95.up.railway.app']
 
 REDIS_URL = os.environ.get('REDIS_URL','redis://localhost:6379/1')
 ES_URL = os.environ.get('ES_URL','http://localhost:9200')
