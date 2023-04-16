@@ -39,6 +39,8 @@ def scrape_news():
 
                     else:
                         print(f'could not create a new source {source}')
+            else:
+                print(f'{r.get("title")}({r.get("source")}) has added to database')
                 
         
     return f'saved {total}'
