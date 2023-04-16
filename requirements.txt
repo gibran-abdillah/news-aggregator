@@ -1,7 +1,7 @@
 amqp==5.1.1
 asgiref==3.6.0
 async-timeout==4.0.2
-backports.zoneinfo;python_version<"3.9"
+backports.zoneinfo==0.2.1
 beautifulsoup4==4.12.2
 billiard==3.6.4.0
 bs4==0.0.1
@@ -13,6 +13,7 @@ click-didyoumean==0.3.0
 click-plugins==1.1.1
 click-repl==0.2.0
 cron-descriptor==1.2.35
+dj-database-url==1.3.0
 Django==4.2
 django-celery-beat==2.5.0
 django-elasticsearch-dsl==7.3
@@ -25,7 +26,9 @@ gunicorn==20.1.0
 idna==3.4
 ipaddress==1.0.23
 kombu==5.2.4
+mysqlclient==2.1.1
 prompt-toolkit==3.0.38
+PyMySQL==1.0.3
 python-crontab==2.7.1
 python-dateutil==2.8.2
 pytz==2023.3
@@ -34,6 +37,7 @@ requests==2.28.2
 six==1.16.0
 soupsieve==2.4
 sqlparse==0.4.3
+typing-extensions==4.5.0
 tzdata==2023.3
 urllib3==1.26.15
 vine==5.0.0
