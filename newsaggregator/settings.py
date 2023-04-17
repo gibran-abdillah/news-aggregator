@@ -145,14 +145,6 @@ CELERY_BEAT_SCHEDULE = {
     }
 }
 """
-import getpass
-
-CRONTAB = crontab.CronTab(user=getpass.getuser())
-job = CRONTAB.new(command=f'python3 {BASE_DIR}/manage.py scrape')
-job.setall('*/10 * * * *')
-
-CRONTAB.write()
-print('[+] crontab added.')
 
 ELASTICSEARCH_DSL={
     'default': {
