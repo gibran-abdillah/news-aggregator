@@ -1,1 +1,1 @@
-worker: celery -A newsggregator worker -l info -B
+worker: celery -A newsaggregator worker -l info -B 
