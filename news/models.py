@@ -3,7 +3,7 @@ from datetime import datetime
 
 
 class Source(models.Model):
-    name = models.CharField(max_length=25)
+    name = models.CharField(max_length=255)
 
     def __str__(self):
         return self.name 
@@ -11,7 +11,7 @@ class Source(models.Model):
 
 class News(models.Model):
 
-    title = models.CharField(max_length=50)
+    title = models.CharField(max_length=255)
     content = models.TextField()
     date = models.DateTimeField(default=datetime.today)
 
