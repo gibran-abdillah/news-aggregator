@@ -1,1 +1,1 @@
-worker: python3 cron.py
+worker: python3 newsaggregator/cron.py
