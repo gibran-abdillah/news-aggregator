@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import os , dj_database_url
+import crontab
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -38,8 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'news',
-    'django_celery_beat',
-    'django_crontab',
     'django_elasticsearch_dsl',
     'rest_framework'
 ]
@@ -133,10 +132,6 @@ CSRF_TRUSTED_ORIGINS = ['https://news-aggregator-production-8c95.up.railway.app'
 #REDIS_URL = os.environ.get('REDIS_URL','redis://localhost:6379/1')
 ES_URL = os.environ.get('ES_URL','http://localhost:9200')
 
-CRONJOBS = [
-    ("*/10 * * * *","news.tasks.scrape_news")
-]
-
 """ 
 CELERY_BROKER_URL = REDIS_URL
 CELERY_RESULT_BACKEND = REDIS_URL
@@ -150,6 +145,14 @@ CELERY_BEAT_SCHEDULE = {
     }
 }
 """
+import getpass
+
+CRONTAB = crontab.CronTab(user=getpass.getuser())
+job = CRONTAB.new(command=f'python3 {BASE_DIR}/manage.py scrape')
+job.setall('*/10 * * * *')
+
+CRONTAB.write()
+print('[+] crontab added.')
 
 ELASTICSEARCH_DSL={
     'default': {
