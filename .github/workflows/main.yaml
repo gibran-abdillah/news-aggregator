@@ -13,5 +13,5 @@ jobs:
       with:
         server: ftp.gibranabdillah.my.id
         username: gibranab
-        server-dir: /home/gibranab/news.gibranabdillah.my.id/
+        server-dir: news.gibranabdillah.my.id/
         password: ${{ secrets.ftp_password }}
