@@ -2,7 +2,6 @@ from newsaggregator.celery import app
 from utils.scrape import main as scrape_main
 from news.models import News, Source
 
-@app.task
 def scrape_news():
     results = scrape_main()
 

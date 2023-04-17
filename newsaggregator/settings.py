@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'news',
     'django_celery_beat',
+    'django_crontab',
     'django_elasticsearch_dsl',
     'rest_framework'
 ]
@@ -129,9 +130,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CSRF_TRUSTED_ORIGINS = ['https://news-aggregator-production-8c95.up.railway.app']
 
-REDIS_URL = os.environ.get('REDIS_URL','redis://localhost:6379/1')
+#REDIS_URL = os.environ.get('REDIS_URL','redis://localhost:6379/1')
 ES_URL = os.environ.get('ES_URL','http://localhost:9200')
 
+CRONJOBS = [
+    ("*/10 * * * *","news.tasks.scrape_news")
+]
+
+""" 
 CELERY_BROKER_URL = REDIS_URL
 CELERY_RESULT_BACKEND = REDIS_URL
 CELERY_RESULT_SERIALIZER = 'json'
@@ -143,7 +149,7 @@ CELERY_BEAT_SCHEDULE = {
         'schedule':600, # scrape every 10 minutes
     }
 }
-
+"""
 
 ELASTICSEARCH_DSL={
     'default': {
