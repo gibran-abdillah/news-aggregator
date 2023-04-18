@@ -18,32 +18,11 @@ Web App that aggregates news articles from multiple sources using BeautifulSoup4
   ```
 
 ## Setup the project
-- Change your ```REDIS_URL``` and ```ELASTICSEARCH_DSL``` in newsaggregator/settings.py
-  ```python
-    REDIS_URL = 'redis://localhost:6379/1' # change with your redis url
-
-
-    ELASTICSEARCH_DSL={
-        'default': {
-            'hosts': 'localhost:9200'
-        },
-    }
-    ```
-
-- Run the periodic tasks
+  - add the crontab job with details
   ```sh
-    celery -A newsaggregator worker -l info -B
+  */30 * * * * source yourenv/activate && cd news-aggregator && python3 manage.py scrape > /path/to/log 2>&1
   ```
-
-- You can change the time schedule ```CELERY_BEAT_SCHEDULE```
-  ```python
-    CELERY_BEAT_SCHEDULE = {
-        'news-scraper':{
-            'task':'news.tasks.scrape_news',
-            'schedule':600, # scrape every 10 minutes
-        }
-    }
-    ```
+  
 - Migrate your database and build search index
   ```sh
   python3 manage.py makemigrations
@@ -57,8 +36,11 @@ after everything is set up, run the django app as usual
 ```sh
 python3 manage.py runserver
 ```
-
-you can browse the api at /api
+or you can use ```gunicorn``` to run the wsgi app
+```sh
+gunicorn newsaggregator.wsgi
+```
+finally, you can browse the api at <b>api/</b>
 
 
 ## Customize Scraper 
@@ -67,7 +49,7 @@ still don't get it? check this example code :
 
 ```html
 <p class="date">13 Apr 2023</p>
-<div class="title">This is Example title of the news article</div>
+<h1 class="title">This is Example title of the news article</h1>
 <div class='detail-in' id='isi'>
     <p>Lorem ipsum dolor sit amet</p>
     <p>Azaret metrio zintos!</p>
@@ -76,13 +58,21 @@ still don't get it? check this example code :
 
 all you just need is inherate the ```Spider`` class in utils/core/base.py and set the attribute
 
+example in ```utils/modules/tempo.py```
+
 ```python
 from utils.core.base import Spider
 
 class TempoSpider(Spider):
     def __init__(self):
 
-        self.base_url = 'https://www.tempo.co' # index url that contains articles to scrape
+        self.base_url = [
+            'https://www.tempo.co',
+            'https://nasional.tempo.co',
+            'https://gaya.tempo.co',
+            'https://dunia.tempo.co'
+            ]
+        
         super().__init__(self.base_url)
 
         self.title_attr = {
