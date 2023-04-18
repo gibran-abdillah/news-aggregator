@@ -1,7 +1,6 @@
 amqp==5.1.1
 asgiref==3.6.0
 async-timeout==4.0.2
-backports.zoneinfo==0.2.1
 beautifulsoup4==4.12.2
 billiard==3.6.4.0
 bs4==0.0.1
@@ -14,7 +13,6 @@ click-plugins==1.1.1
 click-repl==0.2.0
 cron-descriptor==1.2.35
 Django==4.2
-django-celery-beat==2.5.0
 django-elasticsearch-dsl==7.3
 django-timezone-field==5.0
 djangorestframework==3.14.0
@@ -26,7 +24,6 @@ idna==3.4
 ipaddress==1.0.23
 kombu==5.2.4
 prompt-toolkit==3.0.38
-python-crontab==2.7.1
 python-dateutil==2.8.2
 pytz==2023.3
 redis==4.5.4
