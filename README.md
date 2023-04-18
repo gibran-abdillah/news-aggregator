@@ -1,5 +1,5 @@
 # News Aggregator 
-Web App that aggregates news articles from multiple sources using BeautifulSoup4 for web scraping, Django for web development, Django REST framework for building APIs, Elasticsearch for search functionality, and periodic tasks for automated updates.
+Web App that aggregates news articles from multiple sources using BeautifulSoup4 for web scraping, Django for web development, Django REST framework for building APIs, and Elasticsearch for search functionality.
 
 ## Installation
 - Install 'elasticsearch' https://www.elastic.co/guide/en/elasticsearch/reference/current/install-elasticsearch.html
